@@ -1,8 +1,6 @@
 ARG BUILD_FROM
 FROM ${BUILD_FROM:-ghcr.io/hassio-addons/debian-base/amd64:7.8.3} AS build
 
-ARG BUILD_VERSION
-
 WORKDIR /tmp
 COPY patches/*.patch patches/
 
@@ -16,12 +14,13 @@ RUN apt-get update && apt-get install --no-upgrade \
 
 # based on the AUR PKGBUILD for hyperion.ng, for the original see:
 # https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=hyperion.ng-git
-RUN git clone --branch ${BUILD_VERSION} https://github.com/hyperion-project/hyperion.ng.git hyperion/ && \
+ARG HYPERION_VERSION="2.1.1"
+RUN git clone --branch ${HYPERION_VERSION} https://github.com/hyperion-project/hyperion.ng.git hyperion/ && \
 	for i in /tmp/patches/*.patch; do \
     patch -d /tmp/hyperion -p1 < "${i}"; done
 WORKDIR /tmp/hyperion
 RUN git submodule update --init --recursive && \
-	test -d build || mkdir build
+	(test -d build || mkdir build)
 WORKDIR /tmp/hyperion/build
 RUN	test -e bin/hyperiond || cmake -DCMAKE_BUILD_TYPE=Release .. && make
 
@@ -47,6 +46,7 @@ COPY --from=build /tmp/hyperion/assets /usr/share/hyperion
 COPY rootfs/ /
 RUN chmod +x /etc/s6-overlay/s6-rc.d/*/*
 
+ARG BUILD_VERSION
 ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_DESCRIPTION
