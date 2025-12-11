@@ -1,0 +1,15 @@
+diff --git a/settings/hyperion.settings.json.default b/settings/hyperion.settings.json.default
+index b059db23..985e461a 100644
+--- a/settings/hyperion.settings.json.default
++++ b/settings/hyperion.settings.json.default
+@@ -131,8 +131,8 @@
+          "enable":false
+       },
+       "webConfig":{
+-         "document_root":"",
+-         "port":8090,
++         "document_root":"/usr/share/hyperion/webconfig",
++         "port":8091,
+          "sslPort":8092,
+          "crtPath":"",
+          "keyPath":"",

@@ -1,0 +1,17 @@
+#!/usr/bin/with-contenv bashio
+#shellcheck shell=bash
+# ==============================================================================
+# Home Assistant Add-on: Hyperion (Next Generation)
+# Runs the Hyperion server
+# ==============================================================================
+bashio::log.info "Starting Hyperion..."
+
+cd /usr/share/hyperion \
+    || bashio::exit.nok "Could not change to Hyperion working directory"
+
+# Start Hyperion in the foreground with or w/o debugging
+if bashio::debug; then
+    exec hyperiond -d --userdata /data/hyperion
+else
+    exec hyperiond -i --userdata /data/hyperion
+fi

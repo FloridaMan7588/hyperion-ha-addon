@@ -1,0 +1,24 @@
+server {
+    listen {{ .address }}:{{ .ingress_port }} default_server;
+
+    include /etc/nginx/includes/server.conf;
+    include /etc/nginx/includes/proxy.conf;
+
+    location / {
+        allow   172.30.32.2;
+        deny    all;
+        proxy_pass http://127.0.0.1:{{ .hyperion_port }};
+        proxy_intercept_errors on;
+        error_page 301 302 307 = @handle_redirect;
+    }
+
+    location @handle_redirect {
+        set $saved_redirect_location '$upstream_http_location';
+        proxy_pass http://127.0.0.1:{{ .hyperion_port }}$saved_redirect_location;
+    }
+    location /health {
+        access_log off;
+        add_header 'Content-Type' 'application/json';
+        return 200 '{"status": "up"}';
+    }
+}

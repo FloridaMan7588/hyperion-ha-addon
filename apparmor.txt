@@ -1,0 +1,57 @@
+#include <tunables/global>
+
+profile hyperion flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+
+  # Capabilities
+  file,
+  signal (send) set=(kill,term,int,hup,cont),
+
+  # S6-Overlay
+  /init ix,
+  /bin/** ix,
+  /usr/bin/** ix,
+  /run/{s6,s6-rc*,service}/** ix,
+  /package/** ix,
+  /command/** ix,
+  /etc/services.d/** rwix,
+  /etc/cont-init.d/** rwix,
+  /etc/cont-finish.d/** rwix,
+  /run/{,**} rwk,
+  /dev/tty rw,
+
+  # Bashio
+  /usr/lib/bashio/** ix,
+  /tmp/** rwk,
+
+  # Access to options.json and other files within your addon
+  /data/** rw,
+
+  # Start new profile for service
+  /usr/bin/hyperiond cx -> hyperiond,
+
+  profile hyperiond flags=(attach_disconnected,mediate_deleted) {
+    #include <abstractions/base>
+
+    # Receive signals from S6-Overlay
+    signal (receive) peer=*_ADDON_SLUG,
+
+    # Access to options.json and other files within your addon
+    /data/** rw,
+
+    # Access to patched web UI config
+    /usr/share/hyperion/** r,
+
+    # Access required for service functionality
+    /usr/bin/hyperiond r,
+    /bin/bash rix,
+    /bin/echo ix,
+    /etc/passwd r,
+    /dev/tty rw,
+    /dev/spidev0.0 rw,
+    /dev/vchiq rw,
+    /dev/amvideo rw,
+    /dev/fb0 rw,
+    /dev/mem rw,
+  }
+}

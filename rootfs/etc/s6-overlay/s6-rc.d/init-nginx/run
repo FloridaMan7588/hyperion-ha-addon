@@ -1,0 +1,21 @@
+#!/usr/bin/with-contenv bashio
+#shellcheck shell=bash
+# ==============================================================================
+# Home Assistant Add-on: Hyperion (Next Generation)
+# Configure NGINX for Ingress to Hyperion
+# ==============================================================================
+bashio::var.json \
+    address "$(bashio::addon.ip_address)" \
+    ingress_port "^$(bashio::addon.ingress_port)" \
+    hyperion_port "^$(bashio::addon.network | jq -r '."8091/tcp" // 8091')" \
+    | tempio \
+        -template /etc/nginx/templates/ingress.template \
+        -out /etc/nginx/servers/ingress.conf
+
+bashio::var.json \
+    dns_host "$(bashio::dns.host)" \
+    | tempio \
+        -template /etc/nginx/templates/resolver.template \
+        -out /etc/nginx/includes/resolver.conf
+
+rm /etc/init.d/nginx

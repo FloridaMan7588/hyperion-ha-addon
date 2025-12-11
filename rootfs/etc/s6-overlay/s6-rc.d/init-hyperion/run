@@ -1,0 +1,20 @@
+#!/usr/bin/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Home Assistant Add-on: Hyperion (Next Generation)
+# Configure Hyperion for running behind NGINX with ingress
+# ==============================================================================
+webConfig="/usr/share/hyperion/webconfig"
+unpatchedJs="$webConfig/js/unpatched.js"
+if [ ! -f "$unpatchedJs" ]; then
+    cp "$webConfig/js/hyperion.js" "$webConfig/js/unpatched.js"
+    entry="$(bashio::addon.ingress_entry)"
+    hostPort="$(bashio::addon.network | jq -r '."8091/tcp" // 8091')"
+    awk "NR==103{
+        print \"      let wsUrl = document.location.hostname + \\\":\\\" + window.jsonPort;\"
+        print \"      if (window.jsonPort !== '$hostPort') wsUrl += '$entry/';\"
+        print \"      wsUrl = (document.location.protocol == \\\"https:\\\") ? \\\"wss://\\\" + wsUrl : \\\"ws://\\\" + wsUrl;\"
+        print \"      window.websocket = new WebSocket(wsUrl);\"
+        next} {print}" $webConfig/js/hyperion.js > $webConfig/js/patched.js
+    cp $webConfig/js/patched.js $webConfig/js/hyperion.js
+fi
