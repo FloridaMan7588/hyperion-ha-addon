@@ -19,5 +19,5 @@ jobs:
       DISPATCH_TOKEN: ${{ secrets.DISPATCH_TOKEN }}
     with:
       repository: hassio-addons
-      repository_edge: none
-      repository_beta: none
+      repository_edge: hassio-addons
+      repository_beta: hassio-addons
