@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install --no-upgrade \
     libasound2 libusb-1.0-0 libftdi1 libcec6 libcec-dev \
     libqt5serialport5 libqt5websockets5 libqt5sql5-sqlite \
     libqt5svg5  -y --no-install-recommends && \
-    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /var/lib/apt/lists/*
 
 # Pull lib/openssl1.1 because Hyperion is built against these
 RUN wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/openssl_${OPENSSL_VERSION}_${TARGETARCH}.deb \
