@@ -1,11 +1,13 @@
 server {
     listen {{ .address }}:{{ .ingress_port }} default_server;
+    listen 127.0.0.1:{{ .ingress_port }};
 
     include /etc/nginx/includes/server.conf;
     include /etc/nginx/includes/proxy.conf;
 
     location / {
         allow   172.30.32.2;
+        allow   127.0.0.1;
         deny    all;
         proxy_pass http://127.0.0.1:{{ .hyperion_port }};
         proxy_intercept_errors on;

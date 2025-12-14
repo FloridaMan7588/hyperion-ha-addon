@@ -1,52 +1,67 @@
 ARG BUILD_FROM
-FROM ${BUILD_FROM:-ghcr.io/hassio-addons/debian-base/amd64:7.8.3} AS build
+FROM ${BUILD_FROM:-ghcr.io/home-assistant/amd64-base-debian:bookworm}
+
+# Static build args
+ARG TARGETARCH
+ARG HYPERION_VERSION="2.1.1"
+ARG HYPERION_URL="https://github.com/hyperion-project/hyperion.ng"
+ARG OPENSSL_VERSION="1.1.1w-0+deb11u4"
+ARG LIBSSL_VERSION="1.1.1w-0+deb11u4"
 
 WORKDIR /tmp
 COPY patches/*.patch patches/
+
+# Primary dependency step
 # hadolint ignore=DL3008
 RUN apt-get update && apt-get install --no-upgrade \
-    git cmake build-essential ninja-build qt6-base-dev \
-    qt6-serialport-dev qt6-websockets-dev libxkbcommon-dev \
-    libvulkan-dev libgl1-mesa-dev libusb-1.0-0-dev python3-dev \
-    libasound2-dev libturbojpeg0-dev libjpeg-dev libssl-dev libcec-dev \
-    libp8-platform-dev libudev-dev pkg-config libftdi1-dev \
-    libxcb-render0-dev libxcb-shm0-dev libxcb-image0-dev \
-    libxcb-randr0-dev libxrandr-dev -y --no-install-recommends
+    nginx wget git patch libpython3.11 libturbojpeg0 \
+    libasound2 libusb-1.0-0 libftdi1 libcec6 libcec-dev \
+    libqt5serialport5 libqt5websockets5 libqt5sql5-sqlite \
+    libqt5svg5  -y --no-install-recommends
 
-# based on the AUR PKGBUILD for hyperion.ng, for the original see:
-# https://aur.archlinux.org/cgit/aur.git/tree/PKGBUILD?h=hyperion.ng-git
-ARG HYPERION_VERSION="2.1.1"
-RUN git clone --branch ${HYPERION_VERSION} https://github.com/hyperion-project/hyperion.ng.git hyperion/ && \
+# Pull lib/openssl1.1 because Hyperion is built against these
+RUN wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/openssl_${OPENSSL_VERSION}_${TARGETARCH}.deb \
+    -O /tmp/openssl1.1.deb && \
+    wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.1_${LIBSSL_VERSION}_${TARGETARCH}.deb \
+    -O /tmp/libssl1.1.deb && \
+    apt-get install --no-upgrade \
+    /tmp/libssl1.1.deb /tmp/openssl1.1.deb \
+    -y --no-install-recommends --allow-downgrades
+
+# Download and patch Hyperion Web UI assets
+RUN git clone --branch ${HYPERION_VERSION} --depth 1 ${HYPERION_URL}.git hyperion/ && \
 	for i in /tmp/patches/*.patch; do \
-    patch -d /tmp/hyperion -p1 < "${i}"; done
-WORKDIR /tmp/hyperion
-RUN git submodule update --init --recursive && \
-	(test -d build || mkdir build)
-WORKDIR /tmp/hyperion/build
-RUN	cmake -DCMAKE_BUILD_TYPE=Release .. && make
+    patch -d /tmp/hyperion -p1 < "${i}"; done && \
+    # Determine build architechure for Hyperion
+    if [ "${TARGETARCH}" == "arm64" ]; then HYPERION_ARCH=arm64; fi && \
+    if [ "${TARGETARCH}" == "amd64" ]; then HYPERION_ARCH=x86_64; fi && \
+    # Download precompiled binaries for Hyperion
+    wget ${HYPERION_URL}/releases/download/${HYPERION_VERSION}/Hyperion-${HYPERION_VERSION}-Linux-$HYPERION_ARCH.deb \
+    -O /tmp/Hyperion.deb
 
-FROM ${BUILD_FROM:-ghcr.io/hassio-addons/debian-base/amd64:7.8.3} AS final
+# Cleanup step
+# hadolint ignore=DL3008
+RUN apt-get update && apt-get install --no-upgrade \
+    /tmp/Hyperion.deb \
+    -y --no-install-recommends && \
+    apt-get remove wget git -y && \
+    apt-get autoremove --purge -y && \
+    rm -rf /var/lib/apt/lists/* && \
+    cp -r /tmp/hyperion/assets/* \
+    /usr/share/hyperion/ && \
+    rm -rf /tmp/*
+
+
+# Static configuration
+COPY rootfs/ /
+RUN chmod +x /etc/s6-overlay/s6-rc.d/*/*
 
 WORKDIR /data
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+HEALTHCHECK --interval=15s --start-period=60s --start-interval=2s --timeout=3s --retries=3 \
+    CMD curl --fail http://127.0.0.1:8090/health || exit 1
 
-# final dependencies
-# hadolint ignore=DL3008
-RUN apt-get update && apt-get install --no-upgrade \
-    nginx --no-install-recommends -y && \
-	apt-get update && apt-get install --no-upgrade \
-    libturbojpeg0 libasound2-dev qt6-serialport-dev \
-    qt6-websockets-dev libpython3-dev libqt6sql6-sqlite \
-    libcec-dev --no-install-recommends -y && \
-	rm -rf /var/lib/apt/lists/*
-
-COPY --from=build /tmp/hyperion/build/bin/* /usr/bin
-RUN install -d /usr/share/hyperion/webconfig
-COPY --from=build /tmp/hyperion/assets /usr/share/hyperion
-
-COPY rootfs/ /
-RUN chmod +x /etc/s6-overlay/s6-rc.d/*/*
 
 ARG BUILD_VERSION
 ARG BUILD_ARCH

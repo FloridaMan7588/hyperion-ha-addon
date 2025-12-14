@@ -4,6 +4,6 @@
 # Home Assistant Add-on: Hyperion (Next Generation)
 # Runs the NGINX Server for ingress to Hyperion
 # ==============================================================================
-bashio::log.info "Starting NGinx..."
+bashio::log.info "Starting NGINX..."
 
 exec nginx

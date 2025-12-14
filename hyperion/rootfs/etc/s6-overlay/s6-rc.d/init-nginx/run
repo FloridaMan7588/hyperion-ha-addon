@@ -4,6 +4,7 @@
 # Home Assistant Add-on: Hyperion (Next Generation)
 # Configure NGINX for Ingress to Hyperion
 # ==============================================================================
+bashio::log.info "Configuring NGINX..."
 bashio::var.json \
     address "$(bashio::addon.ip_address)" \
     ingress_port "^$(bashio::addon.ingress_port)" \

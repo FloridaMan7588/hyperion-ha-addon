@@ -5,7 +5,7 @@ index 0ec85948..fb4ca584 100644
 @@ -21,4 +21,4 @@
  	</div>
  </div>
- 
+
 -<script src="/js/content_colors.js"></script>
 +<script src="js/content_colors.js"></script>
 diff --git a/assets/webconfig/content/conf_effect.html b/assets/webconfig/content/conf_effect.html
@@ -15,7 +15,7 @@ index 282cdf1f..9d585c0b 100644
 @@ -20,4 +20,4 @@
  	</div>
  </div>
- 
+
 -<script src="/js/content_effects.js"></script>
 +<script src="js/content_effects.js"></script>
 diff --git a/assets/webconfig/content/conf_events.html b/assets/webconfig/content/conf_events.html
@@ -25,7 +25,7 @@ index df98b737..4d5baaa0 100644
 @@ -8,4 +8,4 @@
  	</div>
  </div>
- 
+
 -<script src="/js/content_events.js"></script>
 +<script src="js/content_events.js"></script>
 diff --git a/assets/webconfig/content/conf_general.html b/assets/webconfig/content/conf_general.html
@@ -35,18 +35,18 @@ index 1ba37bf8..9ec74cb1 100644
 @@ -50,5 +50,5 @@
  	</div>
  </div>
- 
+
 -<script src="/js/content_general.js"></script>
 +<script src="js/content_general.js"></script>
- 
+
 diff --git a/assets/webconfig/content/conf_grabber.html b/assets/webconfig/content/conf_grabber.html
 index 1b50ba3f..4fda700b 100644
 --- a/assets/webconfig/content/conf_grabber.html
 +++ b/assets/webconfig/content/conf_grabber.html
 @@ -9,4 +9,4 @@
  </div>
- 
- 
+
+
 -<script src="/js/content_grabber.js"></script>
 +<script src="js/content_grabber.js"></script>
 diff --git a/assets/webconfig/content/conf_instcapture.html b/assets/webconfig/content/conf_instcapture.html
@@ -56,7 +56,7 @@ index 20ab1075..02373d1f 100644
 @@ -21,4 +21,4 @@
    </div>
  </div>
- 
+
 -<script src="/js/content_instcapture.js"></script>
 +<script src="js/content_instcapture.js"></script>
 diff --git a/assets/webconfig/content/conf_leds.html b/assets/webconfig/content/conf_leds.html
@@ -66,19 +66,19 @@ index 5e961851..ec6db08f 100755
 @@ -481,6 +481,6 @@
    </div>
  </div>
- 
+
 -<script src="/js/content_leds.js"></script>
 +<script src="js/content_leds.js"></script>
- 
- 
+
+
 diff --git a/assets/webconfig/content/conf_logging.html b/assets/webconfig/content/conf_logging.html
 index 7c54d955..499c08a2 100644
 --- a/assets/webconfig/content/conf_logging.html
 +++ b/assets/webconfig/content/conf_logging.html
 @@ -27,4 +27,4 @@
- 
+
  </div>
- 
+
 -<script src="/js/content_logging.js"></script>
 +<script src="js/content_logging.js"></script>
 diff --git a/assets/webconfig/content/conf_network.html b/assets/webconfig/content/conf_network.html
@@ -88,26 +88,20 @@ index ab4b7c33..9e59133b 100644
 @@ -34,4 +34,4 @@
  	</div>
  </div>
- 
+
 -<script src="/js/content_network.js"></script>
 +<script src="js/content_network.js"></script>
 diff --git a/assets/webconfig/content/conf_webconfig.html b/assets/webconfig/content/conf_webconfig.html
-index a080c03d..549914df 100644
+index a080c03..227f3b6 100644
 --- a/assets/webconfig/content/conf_webconfig.html
 +++ b/assets/webconfig/content/conf_webconfig.html
-@@ -1,10 +1,10 @@
- <div class="container-fluid">
- 	<div class="row">
- 		<div class="col-lg-12">
--			<h3 class="page-header"><i class="fa fa-wrench fa-fw"></i><span data-i18n="main_menu_webconfig_token">Webinterface</span></h3> 
-+			<h3 class="page-header"><i class="fa fa-wrench fa-fw"></i><span data-i18n="main_menu_webconfig_token">Webinterface</span></h3>
- 			<div class="row" id="conf_cont"></div>
- 		</div>
+@@ -7,4 +7,4 @@
  	</div>
  </div>
- 
+
 -<script src="/js/content_webconfig.js"></script>
 +<script src="js/content_webconfig.js"></script>
+
 diff --git a/assets/webconfig/content/connection_lost.html b/assets/webconfig/content/connection_lost.html
 index d1a1c697..15b932ea 100644
 --- a/assets/webconfig/content/connection_lost.html
@@ -128,7 +122,7 @@ index 84b08f72..1dda7e73 100644
 @@ -146,4 +146,4 @@
  </div>
    <!-- /.container-fluid -->
- 
+
 -  <script src="/js/content_dashboard.js"></script>
 +  <script src="js/content_dashboard.js"></script>
 diff --git a/assets/webconfig/content/effects_configurator.html b/assets/webconfig/content/effects_configurator.html
@@ -138,10 +132,10 @@ index 002717d3..82cc00e2 100644
 @@ -61,5 +61,5 @@
    </div>
  </div>
- 
+
 -<script src="/js/content_effectsconfigurator.js"></script>
 +<script src="js/content_effectsconfigurator.js"></script>
- 
+
 diff --git a/assets/webconfig/content/remote.html b/assets/webconfig/content/remote.html
 index 79db2c15..5824f399 100644
 --- a/assets/webconfig/content/remote.html
@@ -152,7 +146,7 @@ index 79db2c15..5824f399 100644
  </div>
 -<script src="/js/content_remote.js"></script>
 +<script src="js/content_remote.js"></script>
- 
+
 diff --git a/assets/webconfig/errorpages/header.html b/assets/webconfig/errorpages/header.html
 index c38f4cb8..db5abee0 100644
 --- a/assets/webconfig/errorpages/header.html
@@ -163,29 +157,29 @@ index c38f4cb8..db5abee0 100644
  	<!-- Bootstrap Core CSS -->
 -	<link href="/css/bootstrap.css" rel="stylesheet">
 +	<link href="css/bootstrap.css" rel="stylesheet">
- 
+
  	<!-- Flags -->
 -	<link href="/css/flag-icon.min.css" rel="stylesheet">
 +	<link href="css/flag-icon.min.css" rel="stylesheet">
- 
+
  	<!-- MetisMenu CSS -->
 -	<link href="/css/metisMenu.css" rel="stylesheet">
 +	<link href="css/metisMenu.css" rel="stylesheet">
- 
+
  	<!-- Custom CSS -->
 -	<link href="/css/sb-admin-2.css" rel="stylesheet">
 -	<link href="/css/hyperion.css" rel="stylesheet">
 +	<link href="css/sb-admin-2.css" rel="stylesheet">
 +	<link href="css/hyperion.css" rel="stylesheet">
- 
+
  	<!-- Custom Fonts -->
 -	<link href="/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 +	<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
- 
+
  	<style>
  		body {margin:auto; padding-top:50px; }
 diff --git a/assets/webconfig/index.html b/assets/webconfig/index.html
-index ea41a777..0a8e2245 100644
+index ea41a77..69fd1b8 100644
 --- a/assets/webconfig/index.html
 +++ b/assets/webconfig/index.html
 @@ -4,7 +4,7 @@
@@ -196,7 +190,37 @@ index ea41a777..0a8e2245 100644
 +      window.location.pathname = 'content/ie_not_supported.html';
      }
    </script>
- 
+
+@@ -13,9 +13,9 @@
+   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+   <meta name="description" content="Hyperion Web Configuration">
+   <meta name="msapplication-TileColor" content="#91989C">
+-  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+-  <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon.png">
+-  <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
++  <meta name="msapplication-TileImage" content="mstile-144x144.png">
++  <link rel="apple-touch-icon-precomposed" sizes="180x180" href="apple-touch-icon.png">
++  <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
+
+   <title data-i18n="general_webui_title">Hyperion - Web Configuration</title>
+
+@@ -236,15 +236,6 @@
+                 </div>
+               </a>
+             </li>
+-            <li class="divider"></li>
+-            <li id="btn_systemRestart">
+-              <a>
+-                <div>
+-                  <i class="fa fa-refresh fa-fw"></i>
+-                  <span data-i18n="InfoDialog_systemRestart_title"></span>
+-                </div>
+-              </a>
+-            </li>
+           </ul>
+         </li>
+         <!-- /.lock-ui -->
+
 diff --git a/assets/webconfig/js/hyperion.js b/assets/webconfig/js/hyperion.js
 index 922ec5e0..f17321ca 100644
 --- a/assets/webconfig/js/hyperion.js
@@ -209,15 +233,15 @@ index 922ec5e0..f17321ca 100644
 +    $.get("cgi/cfg_jsonserver", function () { window.watchdog = 0 }).fail(function () { window.watchdog++; });
    }
  }
- 
+
 diff --git a/assets/webconfig/js/ui_utils.js b/assets/webconfig/js/ui_utils.js
 index 41dba356..9816fccd 100644
 --- a/assets/webconfig/js/ui_utils.js
 +++ b/assets/webconfig/js/ui_utils.js
 @@ -138,7 +138,7 @@ function loadContent(event, forceRefresh) {
- 
+
      $("#page-content").off().empty(); // Off all events and clear the content
- 
+
 -    $("#page-content").load("/content/" + tag + ".html", function (response, status, xhr) {
 +    $("#page-content").load("content/" + tag + ".html", function (response, status, xhr) {
        if (status === "error") {
@@ -225,12 +249,12 @@ index 41dba356..9816fccd 100644
          console.log("Could not find page:", prevTag, ", Redirecting to:", tag);
 @@ -272,7 +272,7 @@ function instanceSwitch(inst) {
  }
- 
+
  function loadContentTo(containerId, fileName) {
 -  $(containerId).load("/content/" + fileName + ".html");
 +  $(containerId).load("content/" + fileName + ".html");
  }
- 
+
  function toggleClass(obj, class1, class2) {
 @@ -1433,7 +1433,7 @@ function handleDarkMode() {
    $("<link/>", {
@@ -239,5 +263,5 @@ index 41dba356..9816fccd 100644
 -    href: "../css/darkMode.css"
 +    href: "css/darkMode.css"
    }).appendTo("head");
- 
+
    setStorage("darkMode", "on");
